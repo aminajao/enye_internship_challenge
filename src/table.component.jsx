@@ -1,63 +1,58 @@
-import React, { Component } from 'react'
-import FormInput from './form.component';
+import React from 'react'
+// import FormInput from './form.component';
 import { Table } from 'antd';
+import { useSelector } from 'react-redux'
 
 
-class UserTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: []
+function UserTable() {
 
-        };
-    }
+    const allUsers = useSelector((state) => (state.users));
+    console.log(allUsers);
 
-    createUser = (newUser) => {
-        this.setState({
-            users: [...this.state.users, newUser]
-        });
-        // console.log(this.state.users.firstName);
-    }
+    const columns = [
 
-    render() {
+        {
+            title: 'FirstName',
+            dataIndex: 'firstName',
+            key: 'firstname'
+        },
+        {
+            title: 'LastName',
+            dataIndex: 'lastName',
+            key: 'lastname'
+        },
+        {
+            title: 'Date Of Birth',
+            dataIndex: 'dateOfBirth',
+            key: 'dob'
+        },
+        {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age'
+        },
+        {
+            title: 'Hobby',
+            dataIndex: 'hobby',
+            key: 'hobby'
+        },
 
-        const columns = [
+    ];
+    return (
 
-            {
-                title: 'FirstName',
-                dataIndex: 'firstName',
-            },
-            {
-                title: 'LastName',
-                dataIndex: 'lastName',
-            },
-            {
-                title: 'Date Of Birth',
-                dataIndex: 'dateOfBirth',
-            },
-            {
-                title: 'Age',
-                dataIndex: 'age',
-            },
-            {
-                title: 'Hobby',
-                dataIndex: 'hobby',
-            },
-        ];
-        return (
-            <div >
-                <FormInput newUser={this.createUser} />
-                <Table
-                    className='table'
-                    columns={columns}
-                    dataSource={this.state.users}
-                    bordered
-                    title={() => <h4>This is the user table</h4>}
-                />
+        <div >
 
-            </div>
-        )
-    }
+            <Table
+                className='table'
+                columns={columns}
+                dataSource={allUsers}
+                bordered
+                title={() => <h4>This is the user table</h4>}
+                rowKey={allUsers => allUsers.id}
+            />
+        </div>
+    )
 }
+
 
 export default UserTable;
